@@ -1,0 +1,12 @@
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/bin/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.deps.json
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/bin/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.runtimeconfig.json
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/bin/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.runtimeconfig.dev.json
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/bin/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.dll
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/bin/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.pdb
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.csprojAssemblyReference.cache
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.AssemblyInfoInputs.cache
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.AssemblyInfo.cs
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.csproj.CoreCompileInputs.cache
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.dll
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.pdb
+/Users/officeimac/Rocket-Elevators-Csharp-Controller/obj/Debug/netcoreapp3.1/Rocket-Elevators-Csharp-Controller.genruntimeconfig.cache

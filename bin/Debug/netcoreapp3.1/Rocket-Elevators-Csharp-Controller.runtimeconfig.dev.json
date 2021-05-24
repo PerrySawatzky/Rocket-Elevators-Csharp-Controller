@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/Users/officeimac/.dotnet/store/|arch|/|tfm|",
+      "/Users/officeimac/.nuget/packages"
+    ]
+  }
+}

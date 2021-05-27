@@ -405,7 +405,7 @@ namespace Rocket_Elevators_Csharp_Controller
         static void Main(string[] args)
         {
             //Test Scenario 1
-            // Battery battery1 = new Battery(1, 4, 60, 6, 5);
+            Battery battery1 = new Battery(1, 4, 60, 6, 5);
             // battery1.findBestColumn(20);
             // battery1.columnList[1].elevatorList[0].currentFloor = 20;
             // battery1.columnList[1].elevatorList[1].currentFloor = 3;

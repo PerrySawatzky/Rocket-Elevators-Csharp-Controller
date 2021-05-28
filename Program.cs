@@ -13,7 +13,6 @@ namespace Rocket_Elevators_Csharp_Controller
         public int bestScore;
         public int referenceGap;
         public List<Column> columnsList;
-        //public Elevator checkIfElevatorIsBetter;
         public List<FloorRequestButton> floorRequestButtonsList;
         //A fun way to solve a dumb _isBasement problem. First column is dedicated to basement, the rest are not.
         public bool trueFalseinator(int i)
@@ -30,7 +29,7 @@ namespace Rocket_Elevators_Csharp_Controller
         public Battery(int _id, int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
             this.ID = _id;
-            this.status = "charged";
+            this.status = "charged"; //I still laugh at this everytime
             columnsList = new List<Column>();
             floorRequestButtonsList = new List<FloorRequestButton>();
             //Column constructor
@@ -85,13 +84,11 @@ namespace Rocket_Elevators_Csharp_Controller
         }
         public Column findBestColumn(int _requestedFloor)
         {
-            //Column bestColumn = null;
             for (int i = 0; i < 4; i++)
-            {//For eacg if the 4 columns, look for a column that serves this floor.
+            {//For each if the 4 columns, look for a column that serves this floor.
                 if (this.columnsList[i].servedFloors.Contains(_requestedFloor))
                 {
                     this.bestColumn = this.columnsList[i];
-                    //Console.WriteLine(this.bestColumn.ID);
                 }
             }
             return this.bestColumn;
@@ -103,7 +100,7 @@ namespace Rocket_Elevators_Csharp_Controller
             referenceGap = 100000;
 
             if (_requestedFloor > 1)
-            {
+            { //This is the elevator selector for the specific scenarios given
                 foreach (Elevator elevator in this.bestColumn.elevatorsList)
                 {
                     if (elevator.currentFloor == 1 && elevator.status == "stopped")
@@ -133,6 +130,7 @@ namespace Rocket_Elevators_Csharp_Controller
                     }
 
                 }
+                //Moves elevator to requestedFloor
                 while(bestElevator.currentFloor > 1){
                     bestElevator.status = "moving";
                     bestElevator.currentFloor--;
@@ -156,7 +154,7 @@ namespace Rocket_Elevators_Csharp_Controller
             }
             }
             if (_requestedFloor < 1)
-            {
+            { //For Basement Floors
                 foreach (Elevator elevator in this.bestColumn.elevatorsList)
                 {
                     if (elevator.currentFloor == 1 && elevator.status == "stopped")
@@ -185,8 +183,9 @@ namespace Rocket_Elevators_Csharp_Controller
                         referenceGap = Math.Abs(elevator.currentFloor - 1);
                     }
                 }
-            
+            //Adds florr to floorRequestsList
             bestElevator.floorRequestsList.Add(_requestedFloor);
+            //Moves elevator to requestFloor
             while(bestElevator.currentFloor > _requestedFloor){
                 bestElevator.currentFloor--;
                 bestElevator.status = "moving";
@@ -262,7 +261,7 @@ namespace Rocket_Elevators_Csharp_Controller
             {
                 if (_requestedFloor > -7 && _requestedFloor < 1)
                 {
-                    //Column A
+                    //For Column A
 
                     if (elevator.currentFloor == _requestedFloor && elevator.direction == "up")
                     {
@@ -284,6 +283,7 @@ namespace Rocket_Elevators_Csharp_Controller
                     }
 
                 }
+                //Same code as above but up and down were switched
                 if (_requestedFloor > 1 && _requestedFloor < 61)
                 {
                     if (elevator.currentFloor == _requestedFloor && elevator.direction == "down")
@@ -306,6 +306,7 @@ namespace Rocket_Elevators_Csharp_Controller
                     }
             }
             }
+            //Moves elevator to Lobby
             while(bestElevator1.currentFloor > 1){
                 while(bestElevator1.currentFloor == _requestedFloor){
                 Console.WriteLine("*DING* Elevator doors are open, please enter");

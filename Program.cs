@@ -93,9 +93,10 @@ namespace Rocket_Elevators_Csharp_Controller
             }
             return this.bestColumn;
         }
-        public Elevator assignElevator(int _requestedFloor, string _direction)
+        public (Column, Elevator) assignElevator(int _requestedFloor, string _direction)
         {
             bestElevator = null;
+            bestColumn = findBestColumn(_requestedFloor);
             bestScore = 5;
             referenceGap = 100000;
 
@@ -204,7 +205,7 @@ namespace Rocket_Elevators_Csharp_Controller
                 break;
             }
             }
-            return bestElevator;
+            return (bestColumn, bestElevator);
 
         }
     }

@@ -25,21 +25,21 @@ Golang is required, [download here](https://https://dotnet.microsoft.com/downloa
 ## Code Examples
 This repo includes 4 test scenarios at the bottom of the file, starting at line 410.
 
-However only five lines are absolutely critical. The first creates the Battery, the two subsequent create the Battery methods:
+However only 3 lines are absolutely critical. The first creates the Battery, the two subsequent create the Battery methods, and the last two:
 ```
 Battery battery1 = new Battery(1, 4, 60, 6, 5);
 battery1.findBestColumn(20);
 battery1.assignElevator(20, "up");
-Console.WriteLine(battery1.bestElevator.ID);
-Console.WriteLine(battery1.bestColumn.ID);
 ```
-The five parameters for Battery are id, amount of columns, amount of floors, amount of basements and amount of elevators per column, respectfully.
+The five parameters for Battery are id, amount of columns, amount of floors, amount of basements, and amount of elevators per column, respectfully.
 
 We assign a variable, in this case 'battery1' to the findBestColumn method in order for the same column to be assigned when completing the subsequent assignElevator method. 
 
 The only parameter in the findBestColumn method is the floor number.
 
 The two parameter in the assignElevator method are the floor the user requested and the direction.
+
+The requestElevator method is for a different type of scenario but is executed the same way as assignElevator. The test scenario for this method starts on line 468.
 
 In order to set up a complex scenario, you can set certain properties of the elevators before hand. This is what that would look like:
 ```

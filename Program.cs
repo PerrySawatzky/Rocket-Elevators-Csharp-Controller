@@ -38,6 +38,7 @@ namespace Rocket_Elevators_Csharp_Controller
                 var column = new Column(i, _amountOfElevatorPerColumn, i, trueFalseinator(i));
                 columnsList.Add(column);
                 //servedFloor adder
+                //Improve the logic by dividing.
                 if (i == 0)
                 {
                     for (int x = 0; x < 6; x++)
@@ -93,9 +94,10 @@ namespace Rocket_Elevators_Csharp_Controller
             }
             return this.bestColumn;
         }
-        public Elevator assignElevator(int _requestedFloor, string _direction)
+        public (Column, Elevator) assignElevator(int _requestedFloor, string _direction)
         {
             bestElevator = null;
+            bestColumn = findBestColumn(_requestedFloor);
             bestScore = 5;
             referenceGap = 100000;
 
@@ -204,7 +206,7 @@ namespace Rocket_Elevators_Csharp_Controller
                 break;
             }
             }
-            return bestElevator;
+            return (bestColumn, bestElevator);
 
         }
     }
@@ -235,7 +237,7 @@ namespace Rocket_Elevators_Csharp_Controller
                 var elevator = new Elevator(i);
                 elevatorsList.Add(elevator);
             }
-            if (_servedFloors == 0)
+            if (_isBasement == true)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -245,9 +247,9 @@ namespace Rocket_Elevators_Csharp_Controller
             }
             if (_isBasement == false)
             {
-                for (int i = 0; i < _servedFloors; i++)
+                for (int i = 2; i <= 60; i++)
                 {
-                    var downCallButtonCreator = new CallButton(i, _servedFloors + 1, "down");
+                    var downCallButtonCreator = new CallButton(i, i, "down");
                     callButtonsList.Add(downCallButtonCreator);
                 }
             }

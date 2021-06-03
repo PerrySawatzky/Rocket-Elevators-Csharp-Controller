@@ -35,17 +35,17 @@ namespace Rocket_Elevators_Csharp_Controller
             //Column constructor
             for (int i = 0; i < _amountOfColumns; i++)
             {
-                var column = new Column(i, _amountOfElevatorPerColumn, i, trueFalseinator(i));
+                var column = new Column(i, _amountOfElevatorPerColumn, 1, trueFalseinator(i));
                 columnsList.Add(column);
                 //servedFloor adder
                 //Improve the logic by dividing.
                 if (i == 0)
                 {
-                    for (int x = 0; x < 6; x++)
+                    for (int x = -1; x < _amountOfBasements; x--)
                     {
-                        columnsList[0].servedFloors.Add(x - 6);
+                        columnsList[0].servedFloors.Add(x);
                     }
-                    columnsList[0].servedFloors.Add(1);
+                    
                 } //Add basement floors and lobby to servedFloors list
                 if (i == 1)
                 {
@@ -56,7 +56,6 @@ namespace Rocket_Elevators_Csharp_Controller
                 }
                 if (i == 2)
                 {
-                    columnsList[2].servedFloors.Add(1);
                     for (int x = 20; x < 40; x++)
                     {
                         columnsList[2].servedFloors.Add(x + 1);
@@ -64,7 +63,6 @@ namespace Rocket_Elevators_Csharp_Controller
                 }
                 if (i == 3)
                 {
-                    columnsList[3].servedFloors.Add(1);
                     for (int x = 40; x < 60; x++)
                     {
                         columnsList[3].servedFloors.Add(x + 1);
@@ -412,32 +410,33 @@ namespace Rocket_Elevators_Csharp_Controller
         {
             //Test Scenario 1
             Battery battery1 = new Battery(1, 4, 60, 6, 5);
-            battery1.findBestColumn(20);
-            battery1.columnsList[1].elevatorsList[0].currentFloor = 20;
-            battery1.columnsList[1].elevatorsList[1].currentFloor = 3;
-            battery1.columnsList[1].elevatorsList[2].currentFloor = 13;
-            battery1.columnsList[1].elevatorsList[3].currentFloor = 15;
-            battery1.columnsList[1].elevatorsList[4].currentFloor = 6;
-            battery1.columnsList[1].elevatorsList[0].floorRequestsList.Add(5);
-            battery1.columnsList[1].elevatorsList[1].floorRequestsList.Add(15);
-            battery1.columnsList[1].elevatorsList[2].floorRequestsList.Add(1);
-            battery1.columnsList[1].elevatorsList[3].floorRequestsList.Add(2);
-            battery1.columnsList[1].elevatorsList[4].floorRequestsList.Add(1);
-            battery1.columnsList[1].elevatorsList[0].status = "moving";
-            battery1.columnsList[1].elevatorsList[1].status = "moving";
-            battery1.columnsList[1].elevatorsList[2].status = "moving";
-            battery1.columnsList[1].elevatorsList[3].status = "moving";
-            battery1.columnsList[1].elevatorsList[4].status = "moving";
-            battery1.columnsList[1].elevatorsList[0].direction = "down";
-            battery1.columnsList[1].elevatorsList[1].direction = "up";
-            battery1.columnsList[1].elevatorsList[2].direction = "down";
-            battery1.columnsList[1].elevatorsList[3].direction = "down";
-            battery1.columnsList[1].elevatorsList[4].direction = "down";
-            battery1.assignElevator(20, "up");
-            Console.WriteLine("Elevator B5 is aka array[4] below");
-            Console.WriteLine(battery1.bestElevator.ID);
-            Console.WriteLine("Best Column ID Array # below");
-            Console.WriteLine(battery1.bestColumn.ID);
+            Console.WriteLine(battery1.columnsList[0].servedFloors);
+            // battery1.findBestColumn(20);
+            // battery1.columnsList[1].elevatorsList[0].currentFloor = 20;
+            // battery1.columnsList[1].elevatorsList[1].currentFloor = 3;
+            // battery1.columnsList[1].elevatorsList[2].currentFloor = 13;
+            // battery1.columnsList[1].elevatorsList[3].currentFloor = 15;
+            // battery1.columnsList[1].elevatorsList[4].currentFloor = 6;
+            // battery1.columnsList[1].elevatorsList[0].floorRequestsList.Add(5);
+            // battery1.columnsList[1].elevatorsList[1].floorRequestsList.Add(15);
+            // battery1.columnsList[1].elevatorsList[2].floorRequestsList.Add(1);
+            // battery1.columnsList[1].elevatorsList[3].floorRequestsList.Add(2);
+            // battery1.columnsList[1].elevatorsList[4].floorRequestsList.Add(1);
+            // battery1.columnsList[1].elevatorsList[0].status = "moving";
+            // battery1.columnsList[1].elevatorsList[1].status = "moving";
+            // battery1.columnsList[1].elevatorsList[2].status = "moving";
+            // battery1.columnsList[1].elevatorsList[3].status = "moving";
+            // battery1.columnsList[1].elevatorsList[4].status = "moving";
+            // battery1.columnsList[1].elevatorsList[0].direction = "down";
+            // battery1.columnsList[1].elevatorsList[1].direction = "up";
+            // battery1.columnsList[1].elevatorsList[2].direction = "down";
+            // battery1.columnsList[1].elevatorsList[3].direction = "down";
+            // battery1.columnsList[1].elevatorsList[4].direction = "down";
+            // battery1.assignElevator(20, "up");
+            // Console.WriteLine("Elevator B5 is aka array[4] below");
+            // Console.WriteLine(battery1.bestElevator.ID);
+            // Console.WriteLine("Best Column ID Array # below");
+            // Console.WriteLine(battery1.bestColumn.ID);
 
             //Test Scenario 2
             // Battery battery2 = new Battery(2, 4, 60, 6, 5);

@@ -41,11 +41,11 @@ namespace Rocket_Elevators_Csharp_Controller
                 //Improve the logic by dividing.
                 if (i == 0)
                 {
-                    for (int x = -1; x < _amountOfBasements; x--)
+                    for (int x = 1; x <= _amountOfBasements; x++)
                     {
-                        columnsList[0].servedFloors.Add(x);
+                        columnsList[0].servedFloors.Add(-x);
                     }
-                    
+                    columnsList[0].servedFloors.Add(1);
                 } //Add basement floors and lobby to servedFloors list
                 if (i == 1)
                 {
@@ -53,13 +53,15 @@ namespace Rocket_Elevators_Csharp_Controller
                     {
                         columnsList[1].servedFloors.Add(x + 1);
                     }//Add floors 1-21 to the column.servedFloors list
-                }
+                    columnsList[1].servedFloors.Add(1);
+                } 
                 if (i == 2)
                 {
                     for (int x = 20; x < 40; x++)
                     {
                         columnsList[2].servedFloors.Add(x + 1);
                     }//Add floors 1 + 21-40 to the column.servedFloors list
+                    columnsList[2].servedFloors.Add(1);
                 }
                 if (i == 3)
                 {
@@ -67,6 +69,7 @@ namespace Rocket_Elevators_Csharp_Controller
                     {
                         columnsList[3].servedFloors.Add(x + 1);
                     }//Add floors 1 + 41-60 to the column.servedFloors list
+                    columnsList[3].servedFloors.Add(1);
                 }
             }
             //Lobby only up and down buttons
@@ -259,7 +262,7 @@ namespace Rocket_Elevators_Csharp_Controller
             referenceGap1 = 100000;
             foreach (Elevator elevator in this.elevatorsList)
             {
-                if (_requestedFloor > -7 && _requestedFloor < 1)
+                if (_requestedFloor < 1)
                 {
                     //For Column A
 
@@ -410,7 +413,14 @@ namespace Rocket_Elevators_Csharp_Controller
         {
             //Test Scenario 1
             Battery battery1 = new Battery(1, 4, 60, 6, 5);
-            Console.WriteLine(battery1.columnsList[0].servedFloors);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[0]);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[1]);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[2]);
+            
+            Console.WriteLine(battery1.columnsList[0].servedFloors[3]);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[4]);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[5]);
+            Console.WriteLine(battery1.columnsList[0].servedFloors[6]);
             // battery1.findBestColumn(20);
             // battery1.columnsList[1].elevatorsList[0].currentFloor = 20;
             // battery1.columnsList[1].elevatorsList[1].currentFloor = 3;

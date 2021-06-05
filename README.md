@@ -11,7 +11,8 @@ This project features a simulated elevator sender and retriever algorithm as wel
 It has three methods, two in the Battery class; assignElevator & findBestColumn, and one in the Column class; requestElevator.
 
 ## Technologies
-Project was created in two languages:
+Project was created in three languages:
+* Java version 14.0.1
 * C# .NET Core 3.0
 * Golang version 1.16.4
 
@@ -23,7 +24,7 @@ gh repo clone PerrySawatzky/Rocket-Elevators-Csharp-Controller
 Golang is required, [download here](https://https://dotnet.microsoft.com/download)
 
 ## Code Examples
-This repo includes 4 test scenarios at the bottom of the file, starting at line 410.
+This repo includes 4 test scenarios at the bottom of the file, starting at line 389.
 
 However only 3 lines are absolutely critical. The first creates the Battery, the two subsequent create the Battery methods, and the last two:
 ```
@@ -39,7 +40,7 @@ The only parameter in the findBestColumn method is the floor number.
 
 The two parameter in the assignElevator method are the floor the user requested and the direction.
 
-The requestElevator method is for a different type of scenario but is executed the same way as assignElevator. The test scenario for this method starts on line 468.
+The requestElevator method is for a different type of scenario but is executed the same way as assignElevator. The test scenario for this method starts on line 447.
 
 In order to set up a complex scenario, you can set certain properties of the elevators before hand. This is what that would look like:
 ```

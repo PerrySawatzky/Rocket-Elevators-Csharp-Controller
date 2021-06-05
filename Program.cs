@@ -67,31 +67,7 @@ namespace Rocket_Elevators_Csharp_Controller
                         columnsList[0].callButtonsList.Add(upCallButtonCreator);
                     }
                     columnsList[0].servedFloors.Add(1);
-                } //Add basement floors and lobby to servedFloors list
-                // if (i == 1)
-                // {
-                //     for (int x = 0; x < 20; x++)
-                //     {
-                //         columnsList[1].servedFloors.Add(x + 1);
-                //     }//Add floors 1-21 to the column.servedFloors list
-                //     columnsList[1].servedFloors.Add(1);
-                // } 
-                // if (i == 2)
-                // {
-                //     for (int x = 20; x < 40; x++)
-                //     {
-                //         columnsList[2].servedFloors.Add(x + 1);
-                //     }//Add floors 1 + 21-40 to the column.servedFloors list
-                //     columnsList[2].servedFloors.Add(1);
-                // }
-                // if (i == 3)
-                // {
-                //     for (int x = 40; x < 60; x++)
-                //     {
-                //         columnsList[3].servedFloors.Add(x + 1);
-                //     }//Add floors 1 + 41-60 to the column.servedFloors list
-                //     columnsList[3].servedFloors.Add(1);
-                // }
+                } 
             }
             //Lobby only up and down buttons
             for (int i = 0; i < 1; i++)
@@ -116,16 +92,8 @@ namespace Rocket_Elevators_Csharp_Controller
             }
             return this.bestColumn;
         }
-        public (Column, Elevator) assignElevator(int _requestedFloor, string _direction)
-        {
-            bestElevator = null;
-            bestColumn = findBestColumn(_requestedFloor);
-            bestScore = 5;
-            referenceGap = 100000;
-
-            if (_requestedFloor > 1)
-            { //This is the elevator selector for the specific scenarios given
-                foreach (Elevator elevator in this.bestColumn.elevatorsList)
+        public (Elevator, int, int) getElevatorStats(string _direction) {
+            foreach (Elevator elevator in this.bestColumn.elevatorsList)
                 {
                     if (elevator.currentFloor == 1 && elevator.status == "stopped")
                     {
@@ -140,7 +108,7 @@ namespace Rocket_Elevators_Csharp_Controller
                         referenceGap = Math.Abs(elevator.currentFloor - 1);
 
                     }
-                    if (elevator.floorRequestsList.Contains(1) && Math.Abs(elevator.currentFloor - 1) < referenceGap && elevator.direction == "down")
+                    if (elevator.floorRequestsList.Contains(1) && Math.Abs(elevator.currentFloor - 1) < referenceGap && elevator.direction == _direction)
                     {
                         bestElevator = elevator;
                         bestScore = 3;
@@ -154,10 +122,54 @@ namespace Rocket_Elevators_Csharp_Controller
                     }
 
                 }
-                //Adds florr to floorRequestsList
-                bestElevator.floorRequestsList.Add(_requestedFloor);
-                //Moves elevator to requestedFloor
-                while(bestElevator.currentFloor > 1){
+                return (bestElevator, bestScore, referenceGap);
+        }
+        // public void moveElevator(int _requestedFloor, Elevator bestElevator) {
+        //     while(bestElevator.currentFloor > 1){
+        //             bestElevator.status = "moving";
+        //             bestElevator.currentFloor--;
+        //             Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
+        //         }
+        //         while(bestElevator.currentFloor > _requestedFloor){
+        //         bestElevator.currentFloor--;
+        //         bestElevator.status = "moving";
+        //         bestElevator.door.status = "closed";
+        //         Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
+        //     }
+        //     while(bestElevator.currentFloor < _requestedFloor){
+        //         bestElevator.currentFloor++;
+        //         bestElevator.status = "moving";
+        //         bestElevator.door.status = "closed";
+        //         Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
+        //     }
+        //     while(bestElevator.currentFloor == _requestedFloor){
+        //         bestElevator.floorRequestsList.Remove(_requestedFloor);
+        //         bestElevator.completedRequestsList.Add(_requestedFloor);
+        //         bestElevator.status = "idle";
+        //         bestElevator.door.status = "open";
+        //         Console.WriteLine("*DING* Elevator has arrived at floor " + _requestedFloor + ".");
+        //         Console.WriteLine("Please exit now.");
+        //         break;
+        //     }
+        // }
+        public (Column, Elevator) assignElevator(int _requestedFloor, string _direction)
+        {
+            bestElevator = null;
+            bestColumn = findBestColumn(_requestedFloor);
+            bestScore = 5;
+            referenceGap = 100000;
+
+            if (_requestedFloor > 1)
+            { 
+                (bestElevator, bestScore, referenceGap) = this.getElevatorStats("down");
+            }
+            if (_requestedFloor < 1)
+            { //For Basement Floors
+                (bestElevator, bestScore, referenceGap) = this.getElevatorStats("up");
+            }
+            bestElevator.floorRequestsList.Add(_requestedFloor);
+            //moveElevator(_requestedFloor, bestElevator);
+            while(bestElevator.currentFloor > 1){
                     bestElevator.status = "moving";
                     bestElevator.currentFloor--;
                     Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
@@ -175,70 +187,16 @@ namespace Rocket_Elevators_Csharp_Controller
                 Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
             }
             while(bestElevator.currentFloor == _requestedFloor){
+                bestElevator.floorRequestsList.Remove(_requestedFloor);
+                bestElevator.completedRequestsList.Add(_requestedFloor);
                 bestElevator.status = "idle";
                 bestElevator.door.status = "open";
                 Console.WriteLine("*DING* Elevator has arrived at floor " + _requestedFloor + ".");
                 Console.WriteLine("Please exit now.");
                 break;
             }
-            }
-            if (_requestedFloor < 1)
-            { //For Basement Floors
-                foreach (Elevator elevator in this.bestColumn.elevatorsList)
-                {
-                    if (elevator.currentFloor == 1 && elevator.status == "stopped")
-                    {
-                        bestElevator = elevator;
-                        bestScore = 1;
-                        referenceGap = Math.Abs(elevator.currentFloor - 1);
-                    }
-                    if (elevator.currentFloor == 1 && elevator.status == "idle")
-                    {
-                        bestElevator = elevator;
-                        bestScore = 2;
-                        referenceGap = Math.Abs(elevator.currentFloor - 1);
-
-                    }
-                    if (elevator.floorRequestsList.Contains(1) && Math.Abs(elevator.currentFloor - 1) < referenceGap && elevator.direction == "up")
-                    {
-                        bestElevator = elevator;
-                        bestScore = 3;
-                        referenceGap = Math.Abs(elevator.currentFloor - 1);
-                    }
-                    if (elevator.status == "idle")
-                    {
-                        bestElevator = elevator;
-                        bestScore = 4;
-                        referenceGap = Math.Abs(elevator.currentFloor - 1);
-                    }
-                }
-            //Adds florr to floorRequestsList
-            bestElevator.floorRequestsList.Add(_requestedFloor);
-            //Moves elevator to requestFloor
-            while(bestElevator.currentFloor > _requestedFloor){
-                bestElevator.currentFloor--;
-                bestElevator.status = "moving";
-                bestElevator.door.status = "closed";
-                Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
-            }
-            while(bestElevator.currentFloor < _requestedFloor){
-                bestElevator.currentFloor++;
-                bestElevator.status = "moving";
-                bestElevator.door.status = "closed";
-                Console.WriteLine("Elevator is on floor " + bestElevator.currentFloor);
-            }
-            while(bestElevator.currentFloor == _requestedFloor){
-                bestElevator.floorRequestsList.Remove(_requestedFloor);
-                bestElevator.completedRequestsList.Add(_requestedFloor);
-                bestElevator.status = "idle";
-                bestElevator.door.status = "open";
-                Console.WriteLine("*DING* Elevator has arrived at " + _requestedFloor + ".");
-                Console.WriteLine("Please exit now.");
-                break;
-            }
-            }
             return (bestColumn, bestElevator);
-
+            
         }
     }
     class Column
@@ -268,22 +226,6 @@ namespace Rocket_Elevators_Csharp_Controller
                 var elevator = new Elevator(i + 1);
                 elevatorsList.Add(elevator);
             }
-            // if (_isBasement == true)
-            // {
-            //     for (int i = 0; i < 6; i++)
-            //     {
-            //         var upCallButtonCreator = new CallButton(i, -6 + i, "up");
-            //         callButtonsList.Add(upCallButtonCreator);
-            //     }
-            // }
-            // if (_isBasement == false)
-            // {
-            //     for (int i = 2; i <= 60; i++)
-            //     {
-            //         var downCallButtonCreator = new CallButton(i, i, "down");
-            //         callButtonsList.Add(downCallButtonCreator);
-            //     }
-            // }
         }
         public Elevator requestElevator(int _requestedFloor, string _direction)
         {
@@ -294,15 +236,13 @@ namespace Rocket_Elevators_Csharp_Controller
             {
                 if (_requestedFloor < 1)
                 {
-                    //For Column A
-
                     if (elevator.currentFloor == _requestedFloor && elevator.direction == "up")
                     {
                         bestElevator1 = elevator;
                         bestScore1 = 1;
                         referenceGap1 = Math.Abs(elevator.currentFloor - _requestedFloor);
                     }
-                    if (elevator.floorRequestsList.Contains(1) && elevator.direction == "up" && elevator.currentFloor < _requestedFloor)
+                    if (elevator.floorRequestsList.Contains(1) && elevator.direction == "up" && elevator.currentFloor < _requestedFloor && Math.Abs(elevator.currentFloor - _requestedFloor) < referenceGap1)
                     {
                         bestElevator1 = elevator;
                         bestScore1 = 2;
@@ -397,6 +337,7 @@ namespace Rocket_Elevators_Csharp_Controller
             completedRequestsList = new List<int>();
         }
     }
+    
     class CallButton
     {
         //Attributes
